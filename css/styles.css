@@ -1,108 +1,210 @@
-body {
-    font-size: 12px;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    background-image: url("../images/dot-grid.png");
-    background-color: #cccccc;
-}
+   /* Estilos generales y variables de color */
+   :root {
+       --background-color: #121212;
+       --text-color: #ffffff;
+       --modal-background: rgba(0, 0, 0, 0.85);
+       --grid-gap: 15px;
+   }
 
-header {
-    width: 100%;
-    padding: 1em;
-    background-color: black;
-    position: fixed;
-    top: 0;
-    width: 100%
-}
+   body {
+       margin: 0;
+       font-family: 'Montserrat', sans-serif;
+       background-image: url("../images/dot-grid-invert.jpg");
+       background-color: var(--background-color);
+       color: var(--text-color);
+       -webkit-font-smoothing: antialiased;
+       -moz-osx-font-smoothing: grayscale;
 
-header img {
-    vertical-align: middle;
-}
+   }
 
-.logo {
-    width: 100px;
-}
+   /* Encabezado del portfolio */
+   .portfolio-header {
+       text-align: center;
+       padding: 40px 20px;
+   }
 
-.search-box {
-    margin: 36px 0;
-    padding-top: 3%;
-}
+   .portfolio-header h1 {
+       margin: 0;
+       font-size: 2.5rem;
+       font-style: italic;
+       font-weight: 700;
+   }
 
-.search-box input[type=text] {
-    width: 100%;
-    padding: 1em;
-    font-size: 1em;
-    color: #444444;
-}
+   .portfolio-header p {
+       font-size: 1.1rem;
+       opacity: 0.8;
+       margin-top: 10px;
+   }
 
-article.search-item {
-    display: inline-block;
-    /* padding-bottom: 3em;
-    margin-bottom: 3em; */
-    margin: 0;
-    padding: 0
-}
-article.search-item img {
-    object-fit: cover;
-    width: 100%;
-    height: 20vh;
-}
+   /* Grilla del portfolio */
+   .portfolio-grid {
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+       gap: var(--grid-gap);
+       padding: var(--grid-gap);
+       justify-content: center;
+   }
 
-.btn {
-    padding: 12px;
-    font-weight: bold;
-}
+   .grid-item {
+       position: relative;
+       overflow: hidden;
+       cursor: pointer;
+       background-color: #222;
+       border-radius: 8px;
+       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+       transition: transform 0.3s ease, box-shadow 0.3s ease;
+   }
 
-.-block {
-    width: 100%;
-}
+   .grid-item:hover {
+       transform: scale(1.03);
+       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+   }
 
-.-primary {
-    background-color: teal;
-    color: white;
-    border: 1.5px solid teal;
-    box-sizing: border-box;
-}
+   .grid-item video,
+   .grid-item img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       display: block;
+   }
 
-.-secondary {
-    background-color: white;
-    color: black;
-    border: 1px solid teal;
-}
+   /* Clases para manejar las relaciones de aspecto */
+   .aspect-16-9 {
+       grid-column: span 2;
+       grid-row: span 1;
+       padding-top: 56.25%;
+       /* 9 / 16 = 0.5625 */
+   }
 
-footer {
-    background: #303030;
-    padding: 20px 0;
-    margin: 36px 0 0 0;
-    font-size: 1em;
-    color: white;
-}
+   .aspect-9-16 {
+       grid-column: span 1;
+       grid-row: span 2;
+       padding-top: 177.77%;
+       /* 16 / 9 = 1.7777 */
+   }
 
-.center {
-    margin: auto;
-    width: 50%;
-}
+   .aspect-1-1 {
+       grid-column: span 1;
+       grid-row: span 1;
+       padding-top: 100%;
+   }
 
-.mainseparator {
-    margin-bottom:1.5em;
-}
+   /* Posicionamiento del contenido dentro de la grilla */
+   .grid-item>* {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+   }
 
-ul {
-    padding: 0;
-    list-style-type: none;
-}
+   /* Estilos de la ventana modal */
+   .modal {
+       display: none;
+       position: fixed;
+       z-index: 1000;
+       left: 0;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       overflow: auto;
+       background-color: var(--modal-background);
+       backdrop-filter: blur(8px);
+       -webkit-backdrop-filter: blur(8px);
+       justify-content: center;
+       align-items: center;
+   }
 
-.list-title {
-    font-size: 14px;
-    line-height: 28px;
-    font-weight: 700;
-}
+   .modal.active {
+       display: flex;
+   }
 
-ul li {
-    font-size: 12px;
-    line-height: 28px;
-}
+   .modal-content {
+       position: relative;
+       margin: auto;
+       max-width: 90vw;
+       max-height: 90vh;
+       display: flex;
+   }
 
-.navbar {
-    background: #000;
-}
+   .modal-content video,
+   .modal-content img {
+       width: 100%;
+       height: auto;
+       max-height: 90vh;
+       display: block;
+       border-radius: 4px;
+   }
+
+   .modal-close {
+       position: absolute;
+       top: -40px;
+       right: 0;
+       color: var(--text-color);
+       font-size: 35px;
+       font-weight: bold;
+       cursor: pointer;
+       transition: color 0.3s ease;
+   }
+
+   .modal-close:hover,
+   .modal-close:focus {
+       color: #bbb;
+       text-decoration: none;
+   }
+
+   /* Ajustes responsivos para la grilla */
+   @media (max-width: 768px) {
+       .portfolio-grid {
+           grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+       }
+
+       .aspect-16-9,
+       .aspect-9-16,
+       .aspect-1-1 {
+           grid-column: span 1;
+           grid-row: span 1;
+           padding-top: 100%;
+           /* Todos los ítems se vuelven cuadrados para consistencia */
+       }
+
+       .aspect-9-16 {
+           padding-top: 150%;
+       }
+
+       .aspect-16-9 {
+           padding-top: 56.25%;
+       }
+   }
+
+   @media (max-width: 480px) {
+       .portfolio-grid {
+           grid-template-columns: 1fr;
+           gap: 20px;
+           padding: 20px;
+       }
+
+       .aspect-16-9,
+       .aspect-9-16,
+       .aspect-1-1 {
+           padding-top: 0;
+           /* Permite que el contenido defina la altura */
+           position: relative;
+       }
+
+       .aspect-9-16 {
+           padding-top: 177.77%;
+       }
+
+       .aspect-16-9 {
+           padding-top: 56.25%;
+       }
+
+       .aspect-1-1 {
+           padding-top: 100%;
+       }
+
+       .grid-item>* {
+           position: relative;
+       }
+   }
